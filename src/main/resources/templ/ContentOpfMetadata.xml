@@ -1,0 +1,7 @@
+  <metadata>
+    <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/" id="articleid">{0}</dc:identifier>
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">{1}</dc:title>
+    <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf" opf:file-as="ylw">ylw</dc:creator>
+    <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">zh-cn</dc:language>
+    <meta name="cover" content="{2}"/>
+  </metadata>
