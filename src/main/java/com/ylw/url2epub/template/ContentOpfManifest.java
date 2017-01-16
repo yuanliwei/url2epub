@@ -21,7 +21,7 @@ public class ContentOpfManifest {
 		// TODO Auto-generated method stub
 
 		contents.forEach(action -> {
-			manifests.append(MessageFormat.format(templItem, action.toString()));
+			manifests.append(MessageFormat.format(templItem, action.getId(), action.getHref(), action.getMediaType()));
 		});
 
 		return MessageFormat.format(templ, manifests.toString());

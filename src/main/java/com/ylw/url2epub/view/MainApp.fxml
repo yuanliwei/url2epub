@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.HTMLEditor?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0"
+	xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.ylw.url2epub.view.MainAppController">
+	<top>
+		<MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
+			<menus>
+				<Menu mnemonicParsing="false" text="File">
+					<items>
+						<MenuItem mnemonicParsing="false" onAction="#onOpenFile"
+							text="打开文件" />
+						<MenuItem mnemonicParsing="false" onAction="#startFileMonitor"
+							text="StartFileMonitor" userData="StartFileMonitor" />
+						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
+							text="百度" userData="http://www.baidu.com" />
+						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
+							text="果壳" userData="http://www.guokr.com/" />
+						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
+							text="RESTful1" userData="file:///E:/git_project/yuanliwei.github.io/src/restful-model/restful-model.html" />
+						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
+							text="http://zaole.net/" userData="http://zaole.net/" />
+						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
+							text="sample-editor" userData="file:///C:/Users/ylw/node_modules/monaco-editor-samples/sample-editor/index.html" />
+						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
+							text="sample-editor2" userData="http://127.0.0.1:8888/sample-editor/" />
+						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
+							text="RESTful3" userData="https://yuanliwei.github.io/" />
+						<MenuItem mnemonicParsing="false" onAction="#onClose"
+							text="Close" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Edit">
+					<items>
+						<MenuItem mnemonicParsing="false" onAction="#onRefresh"
+							text="刷新" />
+						<MenuItem mnemonicParsing="false" onAction="#onAlert"
+							text="Alert()" />
+						<MenuItem mnemonicParsing="false" text="Delete" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Help">
+					<items>
+						<MenuItem mnemonicParsing="false" text="About" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+	</top>
+	<center>
+		<StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0"
+			BorderPane.alignment="CENTER">
+			<children>
+				<Label id="noContentTip" alignment="CENTER" stylesheets="@../application.css"
+					text="请从File &gt; 打开文件  打开一个word文档。" textAlignment="CENTER"
+					textFill="#d7d3d3" wrapText="true">
+					<font>
+						<Font size="37.0" />
+					</font>
+					<StackPane.margin>
+						<Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+					</StackPane.margin>
+				</Label>
+
+			</children>
+		</StackPane>
+	</center>
+</BorderPane>

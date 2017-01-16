@@ -9,7 +9,7 @@ import com.ylw.url2epub.utils.FileUtil;
 public class ContentOpfSpine {
 	String templ = FileUtil.getResString("templ/ContentOpfSpine.xml");
 	// <itemref idref="cover" linear="no"/>
-	String templItem = "<itemref idref=\"{0}\"/>";
+	String templItem = "<itemref idref=\"{0}\"/>\n";
 
 	List<UrlContent> contents;
 
@@ -19,10 +19,11 @@ public class ContentOpfSpine {
 	}
 
 	public String parse() {
-		// TODO Auto-generated method stub
 		StringBuilder sb = new StringBuilder();
 		contents.forEach(action -> {
-			sb.append(MessageFormat.format(templItem, action.toString()));
+			if ("application/xhtml+xml".equals(action.getMediaType())) {
+				sb.append(MessageFormat.format(templItem, action.getId()));
+			}
 		});
 		return MessageFormat.format(templ, sb.toString());
 	}

@@ -102,7 +102,7 @@ public class FileUtil {
 		}
 		return "";
 	}
-	
+
 	public static String getResString(String fileName) {
 		InputStream inStream = null;
 		try {
@@ -158,8 +158,6 @@ public class FileUtil {
 		try {
 			String name = fileName;
 			Class<? extends FileUtil> clazz = new FileUtil().getClass();
-			URL url = clazz.getClassLoader().getResource(name);
-			log.debug(url.toString());
 			return clazz.getClassLoader().getResourceAsStream(name);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -304,5 +302,15 @@ public class FileUtil {
 		String curPath = new File(".").getAbsolutePath();
 		curPath = curPath.substring(0, curPath.length() - 1);
 		return curPath;
+	}
+
+	public static void saveToTempFile(String name, String data) {
+		String folder = System.getProperty("java.io.tmpdir");
+		saveFullPathFile(folder + name, data);
+	}
+
+	public static String getFromTempFile(String name) {
+		String folder = System.getProperty("java.io.tmpdir");
+		return getString(folder + name);
 	}
 }
