@@ -17,23 +17,26 @@ import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.util.TextUtils;
+import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
 import org.htmlparser.Tag;
 import org.htmlparser.tags.LinkTag;
+import org.htmlparser.tags.ScriptTag;
 import org.htmlparser.tags.TitleTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 import org.htmlparser.visitors.NodeVisitor;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.IOUtils;
-import com.ylw.url2epub.model.UrlContent;
+import com.ylw.url2epub.model.CSSStyle;
 import com.ylw.url2epub.model.db.LinkHistory;
 import com.ylw.url2epub.utils.FileUtil;
 import com.ylw.url2epub.utils.digest.MD5;
@@ -58,6 +61,7 @@ public class Get {
 
 	String rootDir;
 	private CallBack callback;
+	private NodeFilter filter;
 
 	public Get(String rootDir) {
 		super();
@@ -91,8 +95,12 @@ public class Get {
 				case "image/gif":
 				case "image/jpeg":
 				case "image/png":
-				case "text/css":
 					saveInputStreamToFile(getPath(ele1), in);
+					break;
+				case "text/css":
+					String style = getStringFromInputStream(in);
+					String simpleStyle = CSSStyle.simple(style);
+					FileUtil.saveFullPathFile(getPath(ele1), simpleStyle);
 					break;
 				case "text/html":
 					ele1.setMediaType("application/xhtml+xml");
@@ -106,7 +114,14 @@ public class Get {
 					if (s2 > 0) {
 						prefix = url.substring(0, s2);
 					}
+					Document doc = Jsoup.parse(body);
+					Elements eles = doc.getElementsByTag("script");
+					eles.forEach(e->{
+						e.remove();
+					});
+					body = doc.html();
 					parseLinks(ele1, prefix, body, deep - 1, atomicInteger);
+//					parseLinks2(ele1, prefix, body, deep - 1, atomicInteger);
 					break;
 				default:
 					log.debug("unknow type");
@@ -121,11 +136,22 @@ public class Get {
 		});
 	}
 
+	private void parseLinks2(Ele ele, String prefix, String body, int deep, AtomicInteger atomicInteger) {
+		Document doc = Jsoup.parse(body);
+		Elements eles = doc.getElementsByTag("a");
+		eles.forEach(e->{
+			String href = e.attr("href");
+			System.out.println(href);
+		});
+		
+	}
+
 	private void parseLinks(Ele ele, String prefix, String body, int deep, AtomicInteger atomicInteger) {
 		try {
 			Parser parser = Parser.createParser(body, "utf-8");
 			List<LinkHistory> histories = new ArrayList<>();
 			NodeVisitor visitor = new NodeVisitor() {
+
 				@Override
 				public void visitTag(Tag tag) {
 					String tagName = tag.getTagName();
@@ -196,12 +222,15 @@ public class Get {
 							break;
 						if (link.contains(" "))
 							break;
+						if (filter != null && !filter.accept(linkTag))
+							break;
 						id = MD5.md5(link) + ".html";
 						linkTag.setLink(id);
 						url = link;
 						if (link.startsWith("/")) {
 							url = prefix + link;
 						}
+
 						histories.add(new LinkHistory(link, url));
 						shortLink = link;
 						if (link.indexOf("?") > 0)
@@ -237,6 +266,13 @@ public class Get {
 						break;
 					case "SCRIPT":
 						// System.out.println(tagName);
+						ScriptTag scriptTag = (ScriptTag) tag;
+						String src = scriptTag.getAttribute("src");
+						if (TextUtils.isEmpty(src)) {
+							scriptTag.setScriptCode("");
+						} else {
+							scriptTag.setAttribute("src", "");
+						}
 						break;
 					default:
 						// System.out.println(tagName);
@@ -252,68 +288,9 @@ public class Get {
 			String savePath = getPath(ele);
 			// OrmLiteUtils.saveOrUpdateAll(histories);
 			FileUtil.saveFullPathFile(savePath, result);
+			// FileUtil.saveFullPathFile(savePath+"-oral.html", body);
 		} catch (ParserException e) {
 			e.printStackTrace();
-		}
-	}
-
-	void parserLinks(String url, String body, List<UrlContent> contents, int deep, AtomicInteger atomicInteger,
-			CallBack callback) {
-		if (deep < 0)
-			return;
-		Pattern pattern = Pattern.compile("<a[^>]*?href=\"([^\"]*?)\"");
-		matchBody(url, body, deep, atomicInteger, callback, pattern);
-		pattern = Pattern.compile("<img[^>]*?src=\"([^\"]*?)\"");
-		matchBody(url, body, deep, atomicInteger, callback, pattern);
-		pattern = Pattern.compile("<link[^>]*?href=\"([^\"]*?)\"");
-		matchBody(url, body, deep, atomicInteger, callback, pattern);
-
-	}
-
-	private void matchBody(String url, String body, int deep, AtomicInteger atomicInteger, CallBack callback,
-			Pattern pattern) {
-		Matcher matcher = pattern.matcher(body);
-		int s1 = url.indexOf("://");
-		int s2 = url.indexOf("/", s1 + 3);
-		String prefix = url;
-		if (s2 > 0) {
-			prefix = url.substring(0, s2);
-		}
-		String prefix2 = prefix;
-		while (matcher.find()) {
-			String findUrl = matcher.group(1);
-			// log.debug("deep:" + deep + " " + findUrl);
-			if (findUrl.contains(".apk"))
-				continue;
-			if (findUrl.contains(".exe"))
-				continue;
-			if (findUrl.contains(".zip"))
-				continue;
-			if (findUrl.contains(".rar"))
-				continue;
-			if (findUrl.contains(".mp3"))
-				continue;
-			if (findUrl.contains(".mp4"))
-				continue;
-			if (findUrl.contains(".avi"))
-				continue;
-			if (findUrl.contains(".mov"))
-				continue;
-			executor.execute(new Runnable() {
-
-				@Override
-				public void run() {
-
-					if (findUrl.startsWith("http")) {
-						getContent(findUrl, findUrl, deep, atomicInteger);
-					}
-					if (findUrl.startsWith("/")) {
-						String s = prefix2 + findUrl;
-						// log.debug(s);
-						getContent(findUrl, s, deep, atomicInteger);
-					}
-				}
-			});
 		}
 	}
 
@@ -333,10 +310,10 @@ public class Get {
 		return "";
 	}
 
-	private void saveInputStreamToFile(String url, InputStream in) {
+	private void saveInputStreamToFile(String path, InputStream in) {
 		FileOutputStream os = null;
 		try {
-			os = new FileOutputStream(url);
+			os = new FileOutputStream(path);
 			byte[] buffer = new byte[4096];
 			int length = 0;
 			while ((length = in.read(buffer)) > 0) {
@@ -410,4 +387,9 @@ public class Get {
 	public void setCallBack(CallBack callBack) {
 		this.callback = callBack;
 	}
+
+	public void setFilter(NodeFilter filter) {
+		this.filter = filter;
+	}
+
 }

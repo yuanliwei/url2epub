@@ -13,6 +13,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.htmlparser.Node;
+import org.htmlparser.NodeFilter;
+import org.htmlparser.tags.LinkTag;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ylw.url2epub.MainApp;
@@ -180,10 +183,26 @@ public class JSInterface {
 			}
 
 		});
-//		String url = "http://www.guokr.com/article/441954/";
+		get.setFilter(new NodeFilter() {
+
+			private static final long serialVersionUID = -6370991190059591944L;
+
+			@Override
+			public boolean accept(Node node) {
+				// TODO Auto-generated method stub
+				LinkTag linkTag = (LinkTag) node;
+				String link = linkTag.getLink();
+				if (link.contains("article/details")) {
+					return true;
+				}
+				return false;
+			}
+		});
+		// String url = "http://www.guokr.com/article/441954/";
 		String url = "http://blog.csdn.net/";
 		int deep = 1;
 		String id = MD5.md5(url) + ".html";
+		String filter = "";
 		get.getContent(id, url, deep, atomicInteger);
 	}
 }
