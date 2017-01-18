@@ -37,6 +37,7 @@ import org.jsoup.select.Elements;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.IOUtils;
 import com.ylw.url2epub.model.CSSStyle;
+import com.ylw.url2epub.model.ContentElement;
 import com.ylw.url2epub.model.db.LinkHistory;
 import com.ylw.url2epub.utils.FileUtil;
 import com.ylw.url2epub.utils.digest.MD5;
@@ -56,8 +57,8 @@ public class Get {
 
 	// ExecutorService e = Executors.newFixedThreadPool(1);
 
-	Map<String, Ele> map = new HashMap<>();
-	List<Ele> list = new ArrayList<>();
+	Map<String, ContentElement> map = new HashMap<>();
+	List<ContentElement> list = new ArrayList<>();
 
 	String rootDir;
 	private CallBack callback;
@@ -84,10 +85,10 @@ public class Get {
 			}
 			return;
 		}
-		Ele ele = new Ele(id, "notitle1", "unknowtype");
+		ContentElement ele = new ContentElement(id, "notitle1", "unknowtype");
 		map.put(url, ele);
 		get(url, (int code, InputStream in, String type) -> {
-			Ele ele1 = new Ele(id, "notitle2", type);
+			ContentElement ele1 = new ContentElement(id, "notitle2", type);
 			map.put(url, ele1);
 			if (code == 0) {
 				list.add(ele1);
@@ -116,12 +117,12 @@ public class Get {
 					}
 					Document doc = Jsoup.parse(body);
 					Elements eles = doc.getElementsByTag("script");
-					eles.forEach(e->{
+					eles.forEach(e -> {
 						e.remove();
 					});
 					body = doc.html();
 					parseLinks(ele1, prefix, body, deep - 1, atomicInteger);
-//					parseLinks2(ele1, prefix, body, deep - 1, atomicInteger);
+					// parseLinks2(ele1, prefix, body, deep - 1, atomicInteger);
 					break;
 				default:
 					log.debug("unknow type");
@@ -136,17 +137,17 @@ public class Get {
 		});
 	}
 
-	private void parseLinks2(Ele ele, String prefix, String body, int deep, AtomicInteger atomicInteger) {
+	private void parseLinks2(ContentElement ele, String prefix, String body, int deep, AtomicInteger atomicInteger) {
 		Document doc = Jsoup.parse(body);
 		Elements eles = doc.getElementsByTag("a");
-		eles.forEach(e->{
+		eles.forEach(e -> {
 			String href = e.attr("href");
 			System.out.println(href);
 		});
-		
+
 	}
 
-	private void parseLinks(Ele ele, String prefix, String body, int deep, AtomicInteger atomicInteger) {
+	private void parseLinks(ContentElement ele, String prefix, String body, int deep, AtomicInteger atomicInteger) {
 		try {
 			Parser parser = Parser.createParser(body, "utf-8");
 			List<LinkHistory> histories = new ArrayList<>();
@@ -175,7 +176,6 @@ public class Get {
 							url = prefix + link;
 						}
 						histories.add(new LinkHistory(link, url));
-						// TODO post to thread pool
 						getContent(id, url, deep, atomicInteger);
 						break;
 					case "IMG":
@@ -209,7 +209,6 @@ public class Get {
 							url = prefix + link;
 						}
 						histories.add(new LinkHistory(link, url));
-						// TODO post to thread pool
 						getContent(id, url, deep, atomicInteger);
 						// System.out.println(tagName);
 						break;
@@ -250,7 +249,6 @@ public class Get {
 							switch (suffix) {
 							case "htm":
 							case "html":
-								// TODO post to thread pool
 								getContent(id, url, deep, atomicInteger);
 								break;
 
@@ -259,7 +257,6 @@ public class Get {
 								break;
 							}
 						} else {
-							// TODO post to thread pool
 							getContent(id, url, deep, atomicInteger);
 						}
 						// System.out.println(tagName);
@@ -380,7 +377,7 @@ public class Get {
 		return name;
 	}
 
-	private String getPath(Ele ele) {
+	private String getPath(ContentElement ele) {
 		return rootDir + ele.getId();
 	}
 

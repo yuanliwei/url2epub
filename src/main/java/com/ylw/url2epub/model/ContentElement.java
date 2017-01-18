@@ -1,16 +1,16 @@
-package com.ylw.url2epub.net;
+package com.ylw.url2epub.model;
 
-public class Ele {
+public class ContentElement {
 	private String id;
 	private String title;
 	private String mediaType;
 
-	public Ele() {
+	public ContentElement() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Ele(String id, String title, String mediaType) {
+	public ContentElement(String id, String title, String mediaType) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -35,6 +35,10 @@ public class Ele {
 
 	public String getMediaType() {
 		return mediaType;
+	}
+
+	public boolean isHtml() {
+		return "application/xhtml+xml".equals(mediaType);
 	}
 
 	public void setMediaType(String mediaType) {

@@ -3,7 +3,7 @@ package com.ylw.url2epub.template;
 import java.text.MessageFormat;
 import java.util.List;
 
-import com.ylw.url2epub.model.UrlContent;
+import com.ylw.url2epub.model.ContentElement;
 import com.ylw.url2epub.utils.FileUtil;
 
 public class ContentOpfSpine {
@@ -11,9 +11,9 @@ public class ContentOpfSpine {
 	// <itemref idref="cover" linear="no"/>
 	String templItem = "<itemref idref=\"{0}\"/>\n";
 
-	List<UrlContent> contents;
+	List<ContentElement> contents;
 
-	public ContentOpfSpine(List<UrlContent> contents) {
+	public ContentOpfSpine(List<ContentElement> contents) {
 		super();
 		this.contents = contents;
 	}

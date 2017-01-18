@@ -1,26 +1,10 @@
 package com.ylw.url2epub;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.ylw.url2epub.model.UrlContent;
-import com.ylw.url2epub.net.Get;
-import com.ylw.url2epub.template.ContentOpf;
-import com.ylw.url2epub.template.ContentOpfGuide;
-import com.ylw.url2epub.template.ContentOpfManifest;
-import com.ylw.url2epub.template.ContentOpfMetadata;
-import com.ylw.url2epub.template.ContentOpfSpine;
-import com.ylw.url2epub.template.TocNcx;
-import com.ylw.url2epub.template.TocNcxDocTitle;
-import com.ylw.url2epub.template.TocNcxHead;
-import com.ylw.url2epub.template.TocNcxNavMap;
-import com.ylw.url2epub.utils.FileUtil;
 import com.ylw.url2epub.utils.PropUtils;
 import com.ylw.url2epub.utils.Res;
 import com.ylw.url2epub.view.MainAppController;
