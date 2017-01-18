@@ -110,37 +110,4 @@ public class MainAppController extends BaseController {
 		// TODO Auto-generated method stub
 
 	}
-
-	@FXML
-	public void startFileMonitor() {
-		String path = "C:\\Users\\ylw\\Desktop\\jseditor\\";
-		Path path2 = Paths.get(path);
-		try {
-			WatchService watchService = FileSystems.getDefault().newWatchService();
-			path2.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-
-			WatchKey key = null;
-			while (true) { // important - create an indefinite loop to watch the
-							// file system changes.
-				try {
-					key = watchService.take();
-					for (WatchEvent<?> event : key.pollEvents()) {
-						Kind<?> kind = event.kind();
-						System.out.println("Event on " + event.context().toString() + " is " + kind);
-					}
-					System.out.println("ttttttttttttttttttttttttttttttttt");
-				} catch (InterruptedException e) {
-					System.out.println("InterruptedException: " + e.getMessage());
-				}
-				boolean reset = key.reset();
-				if (!reset)
-					break;
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
 }

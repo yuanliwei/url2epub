@@ -43,9 +43,11 @@ public class ZipUtilTest {
 	public void tearDown() throws Exception {
 	}
 
+	@SuppressWarnings("unused")
 	@Test
 	public void test() throws IOException, ArchiveException {
 		String name = "C:\\Users\\ylw\\Desktop\\new epub\\test.zip";
+		@SuppressWarnings("resource")
 		OutputStream file = new FileOutputStream(name);
 
 		File addFile = new File("C:\\Users\\ylw\\Desktop\\new epub\\mimetype");
@@ -90,4 +92,9 @@ public class ZipUtilTest {
 		ozip.close();
 	}
 
+	@Test
+	public void testTempFile() {
+		String rootDir = System.getProperty("java.io.tmpdir");
+		System.out.println(rootDir);
+	}
 }

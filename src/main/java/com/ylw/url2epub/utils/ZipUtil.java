@@ -38,6 +38,8 @@ public class ZipUtil {
 	public static void zip(String dir, String zippath) {
 		try {
 			FileUtil.delete(zippath);
+			File zipFile = new File(zippath);
+			Files.createDirectories(Paths.get(zipFile.getParent()));
 			OutputStream out;
 			out = new BufferedOutputStream(new FileOutputStream(new File(zippath)));
 			ZipArchiveOutputStream ozip = (ZipArchiveOutputStream) new ArchiveStreamFactory("utf-8")
@@ -72,13 +74,13 @@ public class ZipUtil {
 	 *            解压后的文件存放路径, 如"D:/test/" ()
 	 */
 	public static void unzip(String zipFilePath, String saveFileDir) {
-//		Path path = Paths.get(saveFileDir);
+		// Path path = Paths.get(saveFileDir);
 		File dir = new File(saveFileDir);
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
 		File file = new File(zipFilePath);
-		
+
 		if (file.exists()) {
 			InputStream is = null;
 			ZipArchiveInputStream zais = null;

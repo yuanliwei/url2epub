@@ -8,6 +8,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -295,6 +301,28 @@ public class FileUtil {
 		File file = new File(path);
 		if (file.exists()) {
 			file.delete();
+		}
+	}
+
+	public static void deleteDir(String dir) {
+		if (!isExistFile(dir))
+			return;
+		Path path = Paths.get(dir);
+		try {
+			Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+				@Override
+				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+					Files.delete(file);
+					return super.visitFile(file, attrs);
+				}
+				@Override
+				public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+					Files.delete(dir);
+					return super.postVisitDirectory(dir, exc);
+				}
+			});
+		} catch (IOException e) {
+			log.error(e.getMessage(), e);
 		}
 	}
 

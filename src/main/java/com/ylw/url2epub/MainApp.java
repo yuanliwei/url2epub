@@ -28,7 +28,7 @@ public class MainApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		primaryStage.setTitle("RESTfulTest");
+		primaryStage.setTitle("url2epub");
 
 		primaryStage.getIcons().add(Res.getImageFromRes("icon.jpg"));
 		PropUtils.load();

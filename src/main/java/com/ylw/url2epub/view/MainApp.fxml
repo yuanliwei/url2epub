@@ -22,8 +22,6 @@
 					<items>
 						<MenuItem mnemonicParsing="false" onAction="#onOpenFile"
 							text="打开文件" />
-						<MenuItem mnemonicParsing="false" onAction="#startFileMonitor"
-							text="StartFileMonitor" userData="StartFileMonitor" />
 						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
 							text="百度" userData="http://www.baidu.com" />
 						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
