@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.ylw.url2epub.utils.FileUtil;
 import com.ylw.url2epub.utils.PropUtils;
 import com.ylw.url2epub.utils.Res;
 import com.ylw.url2epub.view.MainAppController;
@@ -41,6 +42,7 @@ public class MainApp extends Application {
 		}
 		Scene scene = new Scene(root, 1000, 600);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		scene.getStylesheets().add(FileUtil.getResUrl("css/java-keywords.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
@@ -70,6 +72,7 @@ public class MainApp extends Application {
 	@Override
 	public void stop() throws Exception {
 		PropUtils.store();
+		mainViewController.stop();
 		super.stop();
 	}
 

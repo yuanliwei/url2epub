@@ -10,3 +10,11 @@
 .cover_bg{
     -fx-background-color: #AAAAAA;
 }
+.bg_red{
+	-fx-background-color: #FF5555;
+}
+
+.border{
+	-fx-border-style: dashed ;
+	-fx-border-width: 2px;
+}
