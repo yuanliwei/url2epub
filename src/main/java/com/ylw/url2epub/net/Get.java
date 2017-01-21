@@ -73,7 +73,10 @@ public class Get {
 		try {
 			new URL(url);
 		} catch (Exception e) {
-			log.warn(url + " not valid url");
+			String logUrl = url;
+			if (logUrl.length() > 100)
+				logUrl = url.substring(0, 80);
+			log.warn(logUrl + " not valid url");
 			return;
 		}
 		atomicInteger.incrementAndGet();

@@ -7,3 +7,6 @@
     -fx-border-width: 2.0px;
     -fx-padding: 20.0px;
 }
+.cover_bg{
+    -fx-background-color: #AAAAAA;
+}

@@ -25,12 +25,12 @@ public class JSInterface {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				JSObject jsObject = (JSObject) mainApp.mainViewController.webEngine.executeScript("newJsObject()");
-				JSObject window = (JSObject) mainApp.mainViewController.webEngine.executeScript("window");
-				jsObject.setMember("prefix", "pppp");
-				jsObject.setMember("body", "bbbbb");
-				jsObject.setMember("deep", "dddddd");
-				window.call("parseLinks", jsObject);
+//				JSObject jsObject = (JSObject) mainApp.mainViewController.webEngine.executeScript("newJsObject()");
+//				JSObject window = (JSObject) mainApp.mainViewController.webEngine.executeScript("window");
+//				jsObject.setMember("prefix", "pppp");
+//				jsObject.setMember("body", "bbbbb");
+//				jsObject.setMember("deep", "dddddd");
+//				window.call("parseLinks", jsObject);
 			}
 		});
 	}

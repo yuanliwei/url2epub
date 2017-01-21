@@ -67,17 +67,17 @@ public class MainAppController extends BaseController {
 
 	@FXML
 	public void onOpenUrl(ActionEvent event) {
-		mainApp.mainViewController.webEngine.load((String) ((MenuItem) event.getSource()).getUserData());
+		System.out.println((String) ((MenuItem) event.getSource()).getUserData());
 	}
 
 	@FXML
 	public void onRefresh() {
-		mainApp.mainViewController.webEngine.reload();
+		System.out.println("onRefresh()");
 	}
 
 	@FXML
 	public void onAlert() {
-		mainApp.mainViewController.webEngine.executeScript("alert('heeeeeello')");
+		System.out.println("onAlert()");
 	}
 
 	@FXML

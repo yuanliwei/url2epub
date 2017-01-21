@@ -30,12 +30,12 @@ import com.ylw.url2epub.utils.digest.MD5;
 public class EPUBMain {
 	private Get get;
 	String articleid = UUID.randomUUID().toString();
-	String title = "EBOOK";
+	String title = "末日边缘";
 	String author = "ylw";
-	String epubPath = "C:\\Users\\ylw\\Desktop\\new epub\\vbvb.epub";
+	String epubPath = "C:\\Users\\ylw\\Desktop\\new epub\\末日边缘.epub";
 	// String url = "http://www.guokr.com/article/441954/";
-	String url = "http://blog.csdn.net/";
-	int deep = 1;
+	String url = "http://book.zongheng.com/showchapter/405946.html";
+	int deep = 2;
 
 	public void start() {
 
@@ -60,7 +60,7 @@ public class EPUBMain {
 			public boolean accept(Node node) {
 				LinkTag linkTag = (LinkTag) node;
 				String link = linkTag.getLink();
-				if (link.contains("article/details")) {
+				if (link.contains("chapter")) {
 					return true;
 				}
 				return false;

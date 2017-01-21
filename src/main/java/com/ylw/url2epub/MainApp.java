@@ -30,7 +30,7 @@ public class MainApp extends Application {
 		this.primaryStage = primaryStage;
 		primaryStage.setTitle("url2epub");
 
-		primaryStage.getIcons().add(Res.getImageFromRes("icon.jpg"));
+		primaryStage.getIcons().add(Res.getImageFromRes("icon.png"));
 		PropUtils.load();
 		FXMLLoader loader = Res.getFXMLLoader("MainApp.fxml");
 		try {
