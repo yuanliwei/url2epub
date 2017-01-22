@@ -1,6 +1,6 @@
 package com.ylw.url2epub.utils;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.After;
 import org.junit.AfterClass;

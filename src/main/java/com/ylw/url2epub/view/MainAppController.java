@@ -1,17 +1,6 @@
 package com.ylw.url2epub.view;
 
-import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
-
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.WatchEvent;
-import java.nio.file.WatchEvent.Kind;
-import java.nio.file.WatchKey;
-import java.nio.file.WatchService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,11 +9,10 @@ import com.ylw.url2epub.MainApp;
 import com.ylw.url2epub.controller.BaseController;
 import com.ylw.url2epub.utils.PropUtils;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
@@ -39,7 +27,7 @@ public class MainAppController extends BaseController {
 
 	@FXML
 	MenuBar menuBar;
-	
+
 	ProgressBar progressBar;
 	ProgressIndicator progressIndicator;
 
@@ -47,8 +35,6 @@ public class MainAppController extends BaseController {
 
 	@FXML
 	public StackPane stackPane;
-
-	private BorderPane center;
 
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
@@ -72,11 +58,17 @@ public class MainAppController extends BaseController {
 	@FXML
 	public void onRefresh() {
 		System.out.println("onRefresh()");
+		mainApp.mainViewController.filterCode.setValue("onR‘\"efre'sh();");
 	}
 
 	@FXML
 	public void onAlert() {
 		System.out.println("onAlert()");
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.titleProperty().set("来自网页的信息");
+		alert.headerTextProperty().set("来自网页的信息");
+		alert.contentTextProperty().set(mainApp.mainViewController.filterCode.getValue());
+		alert.showAndWait();
 	}
 
 	@FXML

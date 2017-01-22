@@ -6,8 +6,6 @@ import java.util.Date;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import net.sf.ehcache.util.TimeUtil;
-
 @DatabaseTable(tableName = "link_history")
 public class LinkHistory {
 	@DatabaseField(id = true, unique = false, columnName = "url")

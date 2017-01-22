@@ -11,10 +11,8 @@ import netscape.javascript.JSObject;
 
 public class JSInterface {
 	private static Log log = LogFactory.getLog(JSInterface.class);
-	private MainApp mainApp;
 
-	public JSInterface(MainApp mainApp) {
-		this.mainApp = mainApp;
+	public JSInterface() {
 	}
 
 	public void start(String url, int deep) {
@@ -25,12 +23,14 @@ public class JSInterface {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-//				JSObject jsObject = (JSObject) mainApp.mainViewController.webEngine.executeScript("newJsObject()");
-//				JSObject window = (JSObject) mainApp.mainViewController.webEngine.executeScript("window");
-//				jsObject.setMember("prefix", "pppp");
-//				jsObject.setMember("body", "bbbbb");
-//				jsObject.setMember("deep", "dddddd");
-//				window.call("parseLinks", jsObject);
+				// JSObject jsObject = (JSObject)
+				// mainApp.mainViewController.webEngine.executeScript("newJsObject()");
+				// JSObject window = (JSObject)
+				// mainApp.mainViewController.webEngine.executeScript("window");
+				// jsObject.setMember("prefix", "pppp");
+				// jsObject.setMember("body", "bbbbb");
+				// jsObject.setMember("deep", "dddddd");
+				// window.call("parseLinks", jsObject);
 			}
 		});
 	}
@@ -40,7 +40,6 @@ public class JSInterface {
 	}
 
 	public void setMainApp(MainApp mainApp2) {
-		this.mainApp = mainApp2;
 	}
 
 	public void testB() {

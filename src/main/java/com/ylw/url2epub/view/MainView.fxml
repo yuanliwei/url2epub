@@ -14,10 +14,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.TextArea?>
-<?import com.ylw.url2epub.view.JavascriptCodeEdit?>
+<?import com.ylw.url2epub.view.JavascriptCodeEditWebView?>
 <?import org.fxmisc.flowless.VirtualizedScrollPane?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.ylw.url2epub.view.MainViewController">
@@ -36,14 +39,17 @@
 				</rowConstraints>
 				<children>
 					<Label text="书名 " GridPane.rowIndex="0" GridPane.columnIndex="0" />
-					<TextField fx:id="textBookName" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+					<TextField fx:id="textBookName" GridPane.rowIndex="0"
+						GridPane.columnIndex="1" />
 					<Label text="作者 " GridPane.rowIndex="1" GridPane.columnIndex="0" />
-					<TextField fx:id="textAuthor" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+					<TextField fx:id="textAuthor" GridPane.rowIndex="1"
+						GridPane.columnIndex="1" />
 					<Label text="articleId " GridPane.rowIndex="2"
 						GridPane.columnIndex="0" />
-					<TextField fx:id="textArticleId" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+					<TextField fx:id="textArticleId" GridPane.rowIndex="2"
+						GridPane.columnIndex="1" />
 					<Button text="选择封面" GridPane.rowIndex="3"
-						GridPane.columnIndex="1" onAction="#selCover"/>
+						GridPane.columnIndex="1" onAction="#selCover" />
 				</children>
 			</GridPane>
 			<ImageView VBox.vgrow="ALWAYS" fx:id="bookPic" />
@@ -55,28 +61,28 @@
 				<Insets left="10" right="10" top="10" bottom="10" />
 			</padding>
 			<children>
-				<HBox alignment="CENTER" prefHeight="30">
-					<Label text="URL " alignment="CENTER_RIGHT" prefWidth="30" />
+				<HBox alignment="CENTER" prefHeight="30" minHeight="30">
+					<Label text="URL " alignment="CENTER_RIGHT" prefWidth="30"
+						minWidth="30" />
 					<TextField fx:id="textUrl" HBox.hgrow="ALWAYS" />
 				</HBox>
-				<HBox alignment="CENTER" prefHeight="30">
-					<Label text="深度 " alignment="CENTER_RIGHT" prefWidth="30" />
+				<HBox alignment="CENTER" prefHeight="30" minHeight="30">
+					<Label text="深度 " alignment="CENTER_RIGHT" prefWidth="30"
+						minWidth="30" />
 					<TextField fx:id="textDeep" HBox.hgrow="ALWAYS" />
 				</HBox>
-				<Label text="URL filter:" />
-				<StackPane VBox.vgrow="ALWAYS" fx:id="filterStack">
-					<padding>
-						<Insets left="10" right="10" top="10" bottom="10" />
-					</padding>
-					<JavascriptCodeEdit fx:id="filterCode"/>
-				</StackPane>
-				<Label text="Chapter order:" />
-				<StackPane VBox.vgrow="ALWAYS" fx:id="chapterStack">
-					<padding>
-						<Insets left="10" right="10" top="10" bottom="10" />
-					</padding>
-					<JavascriptCodeEdit fx:id="chapterCode"/>
-				</StackPane>
+				<TabPane VBox.vgrow="ALWAYS">
+					<Tab text="URL filter" closable="false">
+						<StackPane fx:id="filterStack">
+							<JavascriptCodeEditWebView fx:id="filterCode" />
+						</StackPane>
+					</Tab>
+					<Tab text="Chapter order" closable="false">
+						<StackPane fx:id="chapterStack">
+							<JavascriptCodeEditWebView fx:id="chapterCode" />
+						</StackPane>
+					</Tab>
+				</TabPane>
 			</children>
 		</VBox>
 	</center>
@@ -85,7 +91,8 @@
 			<padding>
 				<Insets left="10" right="10" top="10" bottom="10" />
 			</padding>
-			<ProgressBar fx:id="progressBar" progress="0.3" maxWidth="999999999" HBox.hgrow="ALWAYS"/>
+			<ProgressBar fx:id="progressBar" progress="0.3" maxWidth="999999999"
+				HBox.hgrow="ALWAYS" />
 		</HBox>
 	</bottom>
 </BorderPane>

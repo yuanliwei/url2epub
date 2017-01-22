@@ -22,20 +22,6 @@
 					<items>
 						<MenuItem mnemonicParsing="false" onAction="#onOpenFile"
 							text="打开文件" />
-						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
-							text="百度" userData="http://www.baidu.com" />
-						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
-							text="果壳" userData="http://www.guokr.com/" />
-						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
-							text="RESTful1" userData="file:///E:/git_project/yuanliwei.github.io/src/restful-model/restful-model.html" />
-						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
-							text="http://zaole.net/" userData="http://zaole.net/" />
-						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
-							text="sample-editor" userData="file:///C:/Users/ylw/node_modules/monaco-editor-samples/sample-editor/index.html" />
-						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
-							text="sample-editor2" userData="http://127.0.0.1:8888/sample-editor/" />
-						<MenuItem mnemonicParsing="false" onAction="#onOpenUrl"
-							text="RESTful3" userData="https://yuanliwei.github.io/" />
 						<MenuItem mnemonicParsing="false" onAction="#onClose"
 							text="Close" />
 					</items>
